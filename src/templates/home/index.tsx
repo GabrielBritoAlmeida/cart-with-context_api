@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
         <S.SectionProducts>
           <S.Title>Lista de Produtos</S.Title>
           <S.Product>
-            <Button title="Editar">Produto 1</Button>
+            <Button title="Editar">Produto 2</Button>
             <S.Text>{formatPrice(55.1)}</S.Text>
             <Button>+ Buy</Button>
             <Button>- Remove</Button>
