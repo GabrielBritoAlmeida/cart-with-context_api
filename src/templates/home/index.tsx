@@ -1,29 +1,33 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Button } from 'components/Button'
 import { ModalNewProduct } from 'components/ModalNewProduct'
-import { formatPrice } from 'util/format'
 
-import { useListProductsContext } from 'context/list_products'
+import { useListProductsContext } from 'context/products/get_products'
 
 import * as S from './styles'
 
 export const Home: React.FC = () => {
-  const { name } = useListProductsContext()
-  console.log('🚀 ~ file: index.tsx ~ line 13 ~ name', name)
+  const { listProducts } = useListProductsContext()
   const [openModalNewProduct, setOpenModalNewProduct] = useState(false)
+
+  const currentListProducts = useMemo(() => {
+    return listProducts.map((item) => (
+      <S.Product key={item.id}>
+        <Button title="Editar">{item.name}</Button>
+        <S.Text>{item.price}</S.Text>
+        <Button>+ Buy</Button>
+        <Button>- Remove</Button>
+      </S.Product>
+    ))
+  }, [listProducts])
 
   return (
     <S.Wrapper>
       <S.Container>
         <S.SectionProducts>
           <S.Title>Lista de Produtos</S.Title>
-          <S.Product>
-            <Button title="Editar">Produto 2</Button>
-            <S.Text>{formatPrice(55.1)}</S.Text>
-            <Button>+ Buy</Button>
-            <Button>- Remove</Button>
-          </S.Product>
+          {currentListProducts}
         </S.SectionProducts>
 
         <S.Cart>
