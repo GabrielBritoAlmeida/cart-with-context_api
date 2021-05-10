@@ -1,10 +1,14 @@
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useContext } from 'react'
 
 type ListProductsProviderProps = {
   children: ReactNode
 }
 
-export const ListProductsContext = createContext({})
+type ListProductsContextProps = {
+  name: string
+}
+
+const ListProductsContext = createContext({} as ListProductsContextProps)
 
 export function ListProductsProvider({ children }: ListProductsProviderProps) {
   return (
@@ -12,4 +16,8 @@ export function ListProductsProvider({ children }: ListProductsProviderProps) {
       {children}
     </ListProductsContext.Provider>
   )
+}
+
+export function useListProductsContext() {
+  return useContext(ListProductsContext)
 }

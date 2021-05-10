@@ -4,9 +4,13 @@ import { Button } from 'components/Button'
 import { ModalNewProduct } from 'components/ModalNewProduct'
 import { formatPrice } from 'util/format'
 
+import { useListProductsContext } from 'context/list_products'
+
 import * as S from './styles'
 
 export const Home: React.FC = () => {
+  const { name } = useListProductsContext()
+  console.log('🚀 ~ file: index.tsx ~ line 13 ~ name', name)
   const [openModalNewProduct, setOpenModalNewProduct] = useState(false)
 
   return (
