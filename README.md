@@ -6,18 +6,15 @@ Projeto
 
 ### Deploy na Vercel: 
 
-[Acessar projeto <-](https://vianuvem-teste.vercel.app/)
+
 
 ### Principais Tecnologias:
 
 - Typescript
-- Redux
-- Saga
 - Moka-API (simular api)
 - Axios
 - Prettier
 - Eslint
-- Immer (quebra o conceito de imutabilidade, facilita as manipulações no reducer redux)
 - React-Modal
 
 ### Comandos:
