@@ -24,10 +24,6 @@ export const Home: React.FC = () => {
     price: ''
   })
   const { listCartProducts, handleAddProductToCart } = useCartContext()
-  console.log(
-    '🚀 ~ file: index.tsx ~ line 27 ~ listCartProducts',
-    listCartProducts
-  )
 
   const handleUpdateProduct = useCallback(
     (product: IProduct) => {
@@ -50,6 +46,16 @@ export const Home: React.FC = () => {
     ))
   }, [listProducts, handleUpdateProduct, handleAddProductToCart])
 
+  const currentListCart = useMemo(() => {
+    return listCartProducts.map((item) => (
+      <S.ProductCart key={item.product.id}>
+        <S.Text>{item.product.name}</S.Text>
+        <S.Text>{item.quantity}</S.Text>
+        <Button>x</Button>
+      </S.ProductCart>
+    ))
+  }, [listCartProducts])
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -60,11 +66,7 @@ export const Home: React.FC = () => {
 
         <S.Cart>
           <S.Title>Carrinho</S.Title>
-          <S.ProductCart>
-            <S.Text>Produto 1</S.Text>
-            <S.Text>1</S.Text>
-            <Button>x</Button>
-          </S.ProductCart>
+          {currentListCart}
         </S.Cart>
       </S.Container>
 
