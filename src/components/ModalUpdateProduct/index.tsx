@@ -1,10 +1,12 @@
+import { useListProductsContext } from 'context/products/get_products'
+import { IProduct } from 'context/products/get_products/types'
 import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 
 type ModalNewProductProps = {
   modalIsOpen: boolean
   closeModal: () => void
-  product: { id: null; name: ''; price: '' }
+  product: IProduct
 }
 
 const customStyles = {
@@ -27,6 +29,7 @@ export function ModalUpdateProduct({
 }: ModalNewProductProps) {
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPriceProduct] = useState('')
+  const { handleDeleteProduct } = useListProductsContext()
 
   useEffect(() => {
     setNameProduct(product.name)
@@ -82,7 +85,12 @@ export function ModalUpdateProduct({
             Salvar Edição
           </S.ButtonModalAdd>
         </S.AlignButtonModal>
-        <S.ButtonModalDelete type="button">Excluir item</S.ButtonModalDelete>
+        <S.ButtonModalDelete
+          type="button"
+          onClick={() => handleDeleteProduct(product?.id)}
+        >
+          Excluir item
+        </S.ButtonModalDelete>
       </S.FormModal>
     </Modal>
   )

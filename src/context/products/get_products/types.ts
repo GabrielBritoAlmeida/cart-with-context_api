@@ -3,3 +3,8 @@ export type IProduct = {
   name: string
   price: string
 }
+
+export type IProductCrud = {
+  name: string
+  price: string
+}

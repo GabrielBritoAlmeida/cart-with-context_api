@@ -2,19 +2,38 @@ import { useMemo, useState } from 'react'
 
 import { Button } from 'components/Button'
 import { ModalNewProduct } from 'components/ModalNewProduct'
+import { ModalUpdateProduct } from 'components/ModalUpdateProduct'
 
 import { useListProductsContext } from 'context/products/get_products'
+import { IProduct } from 'context/products/get_products/types'
 
 import * as S from './styles'
 
 export const Home: React.FC = () => {
-  const { listProducts } = useListProductsContext()
-  const [openModalNewProduct, setOpenModalNewProduct] = useState(false)
+  const {
+    listProducts,
+    openModalNewProduct,
+    openModalUpdateProduct,
+    setOpenModalNewProduct,
+    setOpenModalUpdateProduct
+  } = useListProductsContext()
+  const [product, setProduct] = useState<IProduct>({
+    id: '',
+    name: '',
+    price: ''
+  })
+
+  function handleUpdateProduct(product: IProduct) {
+    setProduct(product)
+    setOpenModalUpdateProduct(true)
+  }
 
   const currentListProducts = useMemo(() => {
     return listProducts.map((item) => (
       <S.Product key={item.id}>
-        <Button title="Editar">{item.name}</Button>
+        <Button onClick={() => handleUpdateProduct(item)} title="Editar">
+          {item.name}
+        </Button>
         <S.Text>{item.price}</S.Text>
         <Button>+ Buy</Button>
         <Button>- Remove</Button>
@@ -49,6 +68,12 @@ export const Home: React.FC = () => {
       <ModalNewProduct
         modalIsOpen={openModalNewProduct}
         closeModal={() => setOpenModalNewProduct(false)}
+      />
+
+      <ModalUpdateProduct
+        product={product}
+        modalIsOpen={openModalUpdateProduct}
+        closeModal={() => setOpenModalUpdateProduct(false)}
       />
     </S.Wrapper>
   )

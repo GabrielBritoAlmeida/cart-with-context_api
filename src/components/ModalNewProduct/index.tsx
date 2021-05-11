@@ -1,3 +1,4 @@
+import { useListProductsContext } from 'context/products/get_products'
 import { useState } from 'react'
 import Modal from 'react-modal'
 
@@ -25,21 +26,18 @@ export function ModalNewProduct({
 }: ModalNewProductProps) {
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPriceProduct] = useState('')
+  const { handleNewProduct } = useListProductsContext()
 
   function handleSubmit() {
     if (!nameProduct || !priceProduct) {
       return alert('Verifiquei os campos nome e valor do produto!')
     }
 
-    const newObj = {
+    const newProduct = {
       name: nameProduct,
       price: priceProduct
     }
-    console.log(
-      '🚀 ~ file: index.tsx ~ line 38 ~ handleSubmit ~ newObj',
-      newObj
-    )
-
+    handleNewProduct(newProduct)
     handleCloseModalClearInputs()
   }
 
