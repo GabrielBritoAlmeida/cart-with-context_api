@@ -1,11 +1,19 @@
 ## Introdução
 
-Projeto
+Projeto que simula um carrinho de compras, usando apenas "Context" do React. 
 
 > Projeto iniciado com Create-react-app.
 
 ### Deploy na Vercel: 
 
+[Acessar projeto <-](https://cart-with-context-api.vercel.app/)
+
+
+### Mesmo projeto usando "Redux e Saga".
+
+[Link do projeto na Vercel](https://vianuvem-teste.vercel.app/)
+
+[Link do projeto com Context](https://github.com/GabrielBritoAlmeida/vianuvem-teste)
 
 
 ### Principais Tecnologias:
