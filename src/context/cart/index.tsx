@@ -22,8 +22,8 @@ type CartContextProps = {
   listCartProducts: CartProps[]
   handleAddProductToCart: (product: IProduct) => void
   handleRemoveProductToCart: (product: IProduct) => void
-  handleUpdateTotalPriceCart: (product: IProduct) => void
-  handleDeleteProductCart: (product: IProduct) => void
+  handleUpdateProductCart: (product: IProduct) => void
+  handleDeleteProductCart: (id: string) => void
   handleCalcTotalPrice: () => string
 }
 
@@ -71,21 +71,20 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }
 
-  function handleUpdateTotalPriceCart(product: IProduct) {
+  function handleUpdateProductCart(product: IProduct) {
     const productInCartIndex = listCartProducts.findIndex(
       (item) => item.product.id === product.id
     )
 
     if (productInCartIndex >= 0) {
       listCartProducts[productInCartIndex].product.price = product.price
+      listCartProducts[productInCartIndex].product.name = product.name
       setListCartProducts([...listCartProducts])
     }
   }
 
-  function handleDeleteProductCart(product: IProduct) {
-    const list = listCartProducts.filter(
-      (item) => item.product.id !== product.id
-    )
+  function handleDeleteProductCart(id: string) {
+    const list = listCartProducts.filter((item) => item.product.id !== id)
     setListCartProducts(list)
   }
 
@@ -100,7 +99,7 @@ export function CartProvider({ children }: CartProviderProps) {
         handleAddProductToCart,
         handleRemoveProductToCart,
         handleCalcTotalPrice,
-        handleUpdateTotalPriceCart,
+        handleUpdateProductCart,
         handleDeleteProductCart
       }}
     >

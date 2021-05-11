@@ -27,7 +27,8 @@ export const Home: React.FC = () => {
     listCartProducts,
     handleAddProductToCart,
     handleRemoveProductToCart,
-    handleCalcTotalPrice
+    handleCalcTotalPrice,
+    handleDeleteProductCart
   } = useCartContext()
   const totalPrice = handleCalcTotalPrice()
 
@@ -64,10 +65,12 @@ export const Home: React.FC = () => {
       <S.ProductCart key={item.product.id}>
         <S.Text>{item.product.name}</S.Text>
         <S.Text>{item.quantity}</S.Text>
-        <Button>x</Button>
+        <Button onClick={() => handleDeleteProductCart(item.product.id)}>
+          x
+        </Button>
       </S.ProductCart>
     ))
-  }, [listCartProducts])
+  }, [listCartProducts, handleDeleteProductCart])
 
   return (
     <S.Wrapper>
