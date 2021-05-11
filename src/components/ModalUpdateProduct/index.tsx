@@ -29,7 +29,7 @@ export function ModalUpdateProduct({
 }: ModalNewProductProps) {
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPriceProduct] = useState('')
-  const { handleDeleteProduct } = useListProductsContext()
+  const { handleDeleteProduct, handleUpdateProduct } = useListProductsContext()
 
   useEffect(() => {
     setNameProduct(product.name)
@@ -47,7 +47,7 @@ export function ModalUpdateProduct({
         name: nameProduct,
         price: priceProduct
       }
-      console.log('🚀 ~ file: index.tsx ~ line 47 ~ handleSubmit ~ obj', obj)
+      handleUpdateProduct(obj)
     }
     closeModal()
   }

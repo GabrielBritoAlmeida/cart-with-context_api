@@ -6,7 +6,6 @@ import {
   useState
 } from 'react'
 import { api } from 'services/api'
-import { formatPrice } from 'util/format'
 import { IProduct, IProductCrud } from './types'
 
 type ListProductsProviderProps = {
@@ -20,6 +19,7 @@ type ListProductsContextProps = {
   openModalUpdateProduct: boolean
   listProducts: IProduct[]
   handleNewProduct: (newProduct: IProductCrud) => void
+  handleUpdateProduct: (updateProduct: IProduct) => void
   handleDeleteProduct: (id: string) => void
 }
 
@@ -40,6 +40,16 @@ export function ListProductsProvider({ children }: ListProductsProviderProps) {
     }
   }
 
+  async function handleUpdateProduct(newProduct: IProduct) {
+    const { id, name, price } = newProduct
+    const response = await api.put(`products/${id}`, { id, name, price })
+
+    if (response.status === 200) {
+      handleListProducts()
+      setOpenModalUpdateProduct(false)
+    }
+  }
+
   async function handleDeleteProduct(id: string) {
     const response = await api.delete(`products/${id}`)
 
@@ -57,7 +67,7 @@ export function ListProductsProvider({ children }: ListProductsProviderProps) {
         return {
           id: item.id,
           name: item.name,
-          price: formatPrice(Number(item.price))
+          price: item.price
         }
       })
 
@@ -75,6 +85,7 @@ export function ListProductsProvider({ children }: ListProductsProviderProps) {
         listProducts,
         handleNewProduct,
         handleDeleteProduct,
+        handleUpdateProduct,
         setOpenModalNewProduct,
         setOpenModalUpdateProduct,
         openModalNewProduct,

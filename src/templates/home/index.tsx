@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { Button } from 'components/Button'
 import { ModalNewProduct } from 'components/ModalNewProduct'
 import { ModalUpdateProduct } from 'components/ModalUpdateProduct'
-
+import { formatPrice } from 'util/format'
 import { useListProductsContext } from 'context/products/get_products'
 import { IProduct } from 'context/products/get_products/types'
 
@@ -34,7 +34,7 @@ export const Home: React.FC = () => {
         <Button onClick={() => handleUpdateProduct(item)} title="Editar">
           {item.name}
         </Button>
-        <S.Text>{item.price}</S.Text>
+        <S.Text>{formatPrice(Number(item.price))}</S.Text>
         <Button>+ Buy</Button>
         <Button>- Remove</Button>
       </S.Product>
