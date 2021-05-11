@@ -5,6 +5,7 @@ import { ModalNewProduct } from 'components/ModalNewProduct'
 import { ModalUpdateProduct } from 'components/ModalUpdateProduct'
 import { formatPrice } from 'util/format'
 import { useListProductsContext } from 'context/products/get_products'
+import { useCartContext } from 'context/cart'
 import { IProduct } from 'context/products/get_products/types'
 
 import * as S from './styles'
@@ -22,6 +23,8 @@ export const Home: React.FC = () => {
     name: '',
     price: ''
   })
+  const { cart } = useCartContext()
+  console.log('🚀 ~ file: index.tsx ~ line 27 ~ cart', cart)
 
   const handleUpdateProduct = useCallback(
     (product: IProduct) => {
