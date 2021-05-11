@@ -23,8 +23,11 @@ export const Home: React.FC = () => {
     name: '',
     price: ''
   })
-  const { cart } = useCartContext()
-  console.log('🚀 ~ file: index.tsx ~ line 27 ~ cart', cart)
+  const { listCartProducts, handleAddProductToCart } = useCartContext()
+  console.log(
+    '🚀 ~ file: index.tsx ~ line 27 ~ listCartProducts',
+    listCartProducts
+  )
 
   const handleUpdateProduct = useCallback(
     (product: IProduct) => {
@@ -41,11 +44,11 @@ export const Home: React.FC = () => {
           {item.name}
         </Button>
         <S.Text>{formatPrice(Number(item.price))}</S.Text>
-        <Button>+ Buy</Button>
+        <Button onClick={() => handleAddProductToCart(item)}>+ Buy</Button>
         <Button>- Remove</Button>
       </S.Product>
     ))
-  }, [listProducts, handleUpdateProduct])
+  }, [listProducts, handleUpdateProduct, handleAddProductToCart])
 
   return (
     <S.Wrapper>
