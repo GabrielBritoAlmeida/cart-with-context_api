@@ -26,8 +26,10 @@ export const Home: React.FC = () => {
   const {
     listCartProducts,
     handleAddProductToCart,
-    handleRemoveProductToCart
+    handleRemoveProductToCart,
+    handleCalcTotalPrice
   } = useCartContext()
+  const totalPrice = handleCalcTotalPrice()
 
   const handleUpdateProduct = useCallback(
     (product: IProduct) => {
@@ -85,7 +87,7 @@ export const Home: React.FC = () => {
         <Button onClick={() => setOpenModalNewProduct(true)}>
           Adicionar novo produto
         </Button>
-        <S.Text style={{ marginLeft: 16 }}>Valor total: R$30,00</S.Text>
+        <S.Text style={{ marginLeft: 16 }}>Valor total: {totalPrice}</S.Text>
       </S.Footer>
       <ModalNewProduct
         modalIsOpen={openModalNewProduct}

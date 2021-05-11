@@ -19,7 +19,7 @@ type ListProductsContextProps = {
   openModalUpdateProduct: boolean
   listProducts: IProduct[]
   handleNewProduct: (newProduct: IProductCrud) => void
-  handleUpdateProduct: (updateProduct: IProduct) => void
+  handleUpdateProduct: (updateProduct: IProduct) => Promise<void>
   handleDeleteProduct: (id: string) => void
 }
 

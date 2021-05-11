@@ -1,4 +1,5 @@
 import { useListProductsContext } from 'context/products/get_products'
+import { useCartContext } from 'context/cart'
 import { IProduct } from 'context/products/get_products/types'
 import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
@@ -30,13 +31,14 @@ export function ModalUpdateProduct({
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPriceProduct] = useState('')
   const { handleDeleteProduct, handleUpdateProduct } = useListProductsContext()
+  const { handleUpdateTotalPriceCart } = useCartContext()
 
   useEffect(() => {
     setNameProduct(product.name)
     setPriceProduct(product.price)
   }, [product])
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!nameProduct || !priceProduct) {
       return alert('Verifiquei os campos nome e valor do produto!')
     }
@@ -47,9 +49,10 @@ export function ModalUpdateProduct({
         name: nameProduct,
         price: priceProduct
       }
-      handleUpdateProduct(obj)
+      await handleUpdateProduct(obj)
+      handleUpdateTotalPriceCart(obj)
+      closeModal()
     }
-    closeModal()
   }
 
   return (

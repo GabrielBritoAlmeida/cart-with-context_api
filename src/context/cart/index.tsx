@@ -1,5 +1,13 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { IProduct } from './types'
+import { formatPrice } from 'util/format'
 
 type CartProviderProps = {
   children: ReactNode
@@ -14,12 +22,22 @@ type CartContextProps = {
   listCartProducts: CartProps[]
   handleAddProductToCart: (product: IProduct) => void
   handleRemoveProductToCart: (product: IProduct) => void
+  handleUpdateTotalPriceCart: (product: IProduct) => void
+  handleCalcTotalPrice: () => string
 }
 
 const CartContext = createContext({} as CartContextProps)
 
 export function CartProvider({ children }: CartProviderProps) {
   const [listCartProducts, setListCartProducts] = useState<CartProps[]>([])
+
+  const handleCalcTotalPrice = useCallback(() => {
+    return formatPrice(
+      listCartProducts.reduce((sumTotal, item) => {
+        return sumTotal + Number(item.product.price) * item.quantity
+      }, 0)
+    )
+  }, [listCartProducts])
 
   function handleAddProductToCart(product: IProduct) {
     const productInCartIndex = listCartProducts.findIndex(
@@ -52,12 +70,29 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }
 
+  function handleUpdateTotalPriceCart(product: IProduct) {
+    const productInCartIndex = listCartProducts.findIndex(
+      (item) => item.product.id === product.id
+    )
+
+    if (productInCartIndex >= 0) {
+      listCartProducts[productInCartIndex].product.price = product.price
+      setListCartProducts([...listCartProducts])
+    }
+  }
+
+  useEffect(() => {
+    handleCalcTotalPrice()
+  }, [handleCalcTotalPrice])
+
   return (
     <CartContext.Provider
       value={{
         listCartProducts,
         handleAddProductToCart,
-        handleRemoveProductToCart
+        handleRemoveProductToCart,
+        handleCalcTotalPrice,
+        handleUpdateTotalPriceCart
       }}
     >
       {children}
