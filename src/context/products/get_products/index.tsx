@@ -31,7 +31,8 @@ export function ListProductsProvider({ children }: ListProductsProviderProps) {
   const [listProducts, setListProducts] = useState<IProduct[]>([])
 
   async function handleNewProduct(newProduct: IProductCrud) {
-    const response = await api.post('products', { newProduct })
+    const { name, price } = newProduct
+    const response = await api.post('products', { name, price })
 
     if (response.status === 201) {
       handleListProducts()
