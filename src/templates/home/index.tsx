@@ -23,7 +23,11 @@ export const Home: React.FC = () => {
     name: '',
     price: ''
   })
-  const { listCartProducts, handleAddProductToCart } = useCartContext()
+  const {
+    listCartProducts,
+    handleAddProductToCart,
+    handleRemoveProductToCart
+  } = useCartContext()
 
   const handleUpdateProduct = useCallback(
     (product: IProduct) => {
@@ -41,10 +45,17 @@ export const Home: React.FC = () => {
         </Button>
         <S.Text>{formatPrice(Number(item.price))}</S.Text>
         <Button onClick={() => handleAddProductToCart(item)}>+ Buy</Button>
-        <Button>- Remove</Button>
+        <Button onClick={() => handleRemoveProductToCart(item)}>
+          - Remove
+        </Button>
       </S.Product>
     ))
-  }, [listProducts, handleUpdateProduct, handleAddProductToCart])
+  }, [
+    listProducts,
+    handleUpdateProduct,
+    handleAddProductToCart,
+    handleRemoveProductToCart
+  ])
 
   const currentListCart = useMemo(() => {
     return listCartProducts.map((item) => (

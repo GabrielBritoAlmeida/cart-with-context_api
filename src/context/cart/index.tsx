@@ -13,6 +13,7 @@ type CartProps = {
 type CartContextProps = {
   listCartProducts: CartProps[]
   handleAddProductToCart: (product: IProduct) => void
+  handleRemoveProductToCart: (product: IProduct) => void
 }
 
 const CartContext = createContext({} as CartContextProps)
@@ -34,8 +35,31 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }
 
+  function handleRemoveProductToCart(product: IProduct) {
+    const productInCartIndex = listCartProducts.findIndex(
+      (item) => item.product.id === product.id
+    )
+
+    if (productInCartIndex >= 0) {
+      if (listCartProducts[productInCartIndex].quantity > 1) {
+        listCartProducts[productInCartIndex].quantity--
+        setListCartProducts([...listCartProducts])
+      } else {
+        const list = [...listCartProducts]
+        list.splice(productInCartIndex, 1)
+        setListCartProducts(list)
+      }
+    }
+  }
+
   return (
-    <CartContext.Provider value={{ listCartProducts, handleAddProductToCart }}>
+    <CartContext.Provider
+      value={{
+        listCartProducts,
+        handleAddProductToCart,
+        handleRemoveProductToCart
+      }}
+    >
       {children}
     </CartContext.Provider>
   )
