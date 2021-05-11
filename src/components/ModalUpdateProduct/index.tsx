@@ -31,7 +31,10 @@ export function ModalUpdateProduct({
   const [nameProduct, setNameProduct] = useState('')
   const [priceProduct, setPriceProduct] = useState('')
   const { handleDeleteProduct, handleUpdateProduct } = useListProductsContext()
-  const { handleUpdateTotalPriceCart } = useCartContext()
+  const {
+    handleUpdateTotalPriceCart,
+    handleDeleteProductCart
+  } = useCartContext()
 
   useEffect(() => {
     setNameProduct(product.name)
@@ -90,7 +93,9 @@ export function ModalUpdateProduct({
         </S.AlignButtonModal>
         <S.ButtonModalDelete
           type="button"
-          onClick={() => handleDeleteProduct(product?.id)}
+          onClick={() => {
+            handleDeleteProduct(product?.id), handleDeleteProductCart(product)
+          }}
         >
           Excluir item
         </S.ButtonModalDelete>

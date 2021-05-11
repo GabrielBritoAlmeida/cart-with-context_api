@@ -23,6 +23,7 @@ type CartContextProps = {
   handleAddProductToCart: (product: IProduct) => void
   handleRemoveProductToCart: (product: IProduct) => void
   handleUpdateTotalPriceCart: (product: IProduct) => void
+  handleDeleteProductCart: (product: IProduct) => void
   handleCalcTotalPrice: () => string
 }
 
@@ -81,6 +82,13 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }
 
+  function handleDeleteProductCart(product: IProduct) {
+    const list = listCartProducts.filter(
+      (item) => item.product.id !== product.id
+    )
+    setListCartProducts(list)
+  }
+
   useEffect(() => {
     handleCalcTotalPrice()
   }, [handleCalcTotalPrice])
@@ -92,7 +100,8 @@ export function CartProvider({ children }: CartProviderProps) {
         handleAddProductToCart,
         handleRemoveProductToCart,
         handleCalcTotalPrice,
-        handleUpdateTotalPriceCart
+        handleUpdateTotalPriceCart,
+        handleDeleteProductCart
       }}
     >
       {children}

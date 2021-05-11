@@ -18,9 +18,9 @@ type ListProductsContextProps = {
   openModalNewProduct: boolean
   openModalUpdateProduct: boolean
   listProducts: IProduct[]
-  handleNewProduct: (newProduct: IProductCrud) => void
+  handleNewProduct: (newProduct: IProductCrud) => Promise<void>
   handleUpdateProduct: (updateProduct: IProduct) => Promise<void>
-  handleDeleteProduct: (id: string) => void
+  handleDeleteProduct: (id: string) => Promise<void>
 }
 
 const ListProductsContext = createContext({} as ListProductsContextProps)
