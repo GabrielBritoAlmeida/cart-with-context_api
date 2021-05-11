@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { Button } from 'components/Button'
 import { ModalNewProduct } from 'components/ModalNewProduct'
@@ -23,10 +23,13 @@ export const Home: React.FC = () => {
     price: ''
   })
 
-  function handleUpdateProduct(product: IProduct) {
-    setProduct(product)
-    setOpenModalUpdateProduct(true)
-  }
+  const handleUpdateProduct = useCallback(
+    (product: IProduct) => {
+      setProduct(product)
+      setOpenModalUpdateProduct(true)
+    },
+    [setProduct, setOpenModalUpdateProduct]
+  )
 
   const currentListProducts = useMemo(() => {
     return listProducts.map((item) => (
@@ -39,7 +42,7 @@ export const Home: React.FC = () => {
         <Button>- Remove</Button>
       </S.Product>
     ))
-  }, [listProducts])
+  }, [listProducts, handleUpdateProduct])
 
   return (
     <S.Wrapper>
